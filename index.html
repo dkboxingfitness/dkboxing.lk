@@ -676,17 +676,43 @@ section { padding: 90px 0; position: relative; overflow: hidden; }
 .schedule-duration { font-family: "Crimson Pro", serif; font-size: 13px; opacity: 0.4; font-style: italic; }
 .schedule-note { margin-top: 28px; text-align: center; font-family: "Crimson Pro", serif; font-size: 15px; opacity: 0.4; font-style: italic; }
 
-/* ── TESTIMONIALS ── */
+/* ── TESTIMONIALS (auto-sliding marquee) ── */
 .dk-testimonials { background: #0a0604; }
-.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 40px; }
+
+.testimonials-marquee {
+  margin-top: 40px;
+  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: testimonial-scroll 38s linear infinite;
+}
+
+.testimonials-marquee:hover .testimonials-track {
+  animation-play-state: paused;
+}
+
+@keyframes testimonial-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 .testimonial-card {
+  flex: 0 0 340px;
   background: rgba(255,255,255,0.03); border: 1px solid rgba(191,31,31,0.12);
   padding: 32px 28px; position: relative; transition: border-color 0.3s, transform 0.3s;
+  display: flex; flex-direction: column; min-height: 280px;
 }
 .testimonial-card:hover { border-color: rgba(191,31,31,0.35); transform: translateY(-4px); }
-.testimonial-quote { font-family: "Bebas Neue", sans-serif; font-size: 56px; color: var(--dk-red); opacity: 0.2; line-height: 0.8; margin-bottom: 14px; }
+.testimonial-quote { font-family: "Bebas Neue", sans-serif; font-size: 56px; color: var(--dk-red); opacity: 0.2; line-height: 0.8; margin-bottom: 14px; flex-shrink: 0; }
 .testimonial-text { font-family: "Crimson Pro", serif; font-size: 16px; line-height: 1.8; opacity: 0.8; font-style: italic; margin-bottom: 24px; }
-.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-author { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 16px; }
 .testimonial-avatar {
   width: 40px; height: 40px; border-radius: 50%;
   background: rgba(191,31,31,0.15); border: 1px solid rgba(191,31,31,0.3);
@@ -1145,7 +1171,8 @@ nav.scrolled { padding-top: 8px; padding-bottom: 8px; box-shadow: 0 4px 24px rgb
   .about-bw-inner, .about-dk-inner, .register-grid { grid-template-columns: 1fr; gap: 36px; }
   .sports-grid, .services-grid { grid-template-columns: 1fr; }
   .schedule-grid { grid-template-columns: repeat(2,1fr); }
-  .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonial-card { flex-basis: 280px; padding: 26px 22px; }
+  .testimonials-track { animation-duration: 26s; }
   .map-inner { grid-template-columns: 1fr; }
   .map-frame { height: 260px; }
   .stats-strip { grid-template-columns: repeat(2,1fr); }
@@ -1466,39 +1493,166 @@ nav.scrolled { padding-top: 8px; padding-bottom: 8px; box-shadow: 0 4px 24px rgb
         <div class="sec-title" style="color:var(--white)">Hear From Our <span style="color:var(--dk-red-light)">Fighters</span></div>
         <div class="sec-rule" style="background:var(--dk-red)"></div>
       </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card reveal-scale rd1">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">Training with DK Boxing Fitness completely changed my fitness level. Coach Dhanush pushes you in the right way — discipline, technique, and heart. Best decision I made.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">A</div>
-            <div>
-              <div class="testimonial-name">Memeber 1</div>
-              <div class="testimonial-role">Student · 6 months</div>
+      <div class="testimonials-marquee">
+        <div class="testimonials-track">
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I was one of the first people training here when it was just a few of us on that terrace. Watching this place grow into what it is now, new members every month, actual structure, people winning fights, it's wild. Still my favourite two hours of the week, three years later.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">A</div>
+              <div>
+                <div class="testimonial-name">Ashwin</div>
+                <div class="testimonial-role">Member · 3 years</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="testimonial-card reveal-scale rd2">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">I came in with zero boxing experience. Within weeks I was sparring and actually holding my own. The environment here is serious but welcoming. Highly recommend.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">R</div>
-            <div>
-              <div class="testimonial-name">Memeber 2</div>
-              <div class="testimonial-role">Amateur Fighter · 1 year</div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Went from not knowing how to throw a jab to winning my first tournament fight in under a year. That's the fastest answer I can give anyone who asks if this place actually works.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">T</div>
+              <div>
+                <div class="testimonial-name">Thilakshan</div>
+                <div class="testimonial-role">Member · 1 year</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="testimonial-card reveal-scale rd3">
-          <div class="testimonial-quote">"</div>
-          <p class="testimonial-text">The Sunday morning sessions are incredible. Great way to start the week. Coach keeps it intense but makes sure your form is right before you move up. Solid gym.</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">N</div>
-            <div>
-              <div class="testimonial-name">Member 3</div>
-              <div class="testimonial-role">Fitness Member · 3 months</div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I nearly quit after my second week. Got completely worked in a pad session and could barely lift my arms the next day. Coach Dhanush clocked I was struggling and just told me 'that's exactly why you come back.' Eight months later that same drill is a warm-up for me.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">R</div>
+              <div>
+                <div class="testimonial-name">Rio</div>
+                <div class="testimonial-role">Member · 8 months</div>
+              </div>
             </div>
           </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">The first time I actually slipped a punch instead of flinching away from it, something clicked. Five months ago I didn't even know that was a skill you could learn. Small moment, but it's the one that made me realise how much I'd actually improved.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Shynthavi</div>
+                <div class="testimonial-role">Member · 5 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Honestly the people keep me coming back as much as the training does. You sweat through a brutal session with the same five or six faces every week and you end up genuinely close. Never expected a boxing gym to feel like that.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">P</div>
+              <div>
+                <div class="testimonial-name">Pragi</div>
+                <div class="testimonial-role">Member · 8 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Down 6kg, resting heart rate dropped, and I can finally do a full round without gassing out. No gimmicks, just showing up twice a week and doing the work.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Saranga</div>
+                <div class="testimonial-role">Member · 6 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I have zero athletic background and was terrified I'd embarrass myself. I did, several times, but Coach Dhanush never once made me feel bad about it, just kept fixing my form until it clicked. Two months in and I actually look forward to getting hit in the pads now, which is a sentence I never thought I'd say.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Shenali</div>
+                <div class="testimonial-role">Member · 2 months</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- duplicate set, required for seamless infinite loop, hidden from screen readers -->
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I was one of the first people training here when it was just a few of us on that terrace. Watching this place grow into what it is now, new members every month, actual structure, people winning fights, it's wild. Still my favourite two hours of the week, three years later.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">A</div>
+              <div>
+                <div class="testimonial-name">Ashwin</div>
+                <div class="testimonial-role">Member · 3 years</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Went from not knowing how to throw a jab to winning my first tournament fight in under a year. That's the fastest answer I can give anyone who asks if this place actually works.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">T</div>
+              <div>
+                <div class="testimonial-name">Thilakshan</div>
+                <div class="testimonial-role">Member · 1 year</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I nearly quit after my second week. Got completely worked in a pad session and could barely lift my arms the next day. Coach Dhanush clocked I was struggling and just told me 'that's exactly why you come back.' Eight months later that same drill is a warm-up for me.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">R</div>
+              <div>
+                <div class="testimonial-name">Rio</div>
+                <div class="testimonial-role">Member · 8 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">The first time I actually slipped a punch instead of flinching away from it, something clicked. Five months ago I didn't even know that was a skill you could learn. Small moment, but it's the one that made me realise how much I'd actually improved.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Shynthavi</div>
+                <div class="testimonial-role">Member · 5 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Honestly the people keep me coming back as much as the training does. You sweat through a brutal session with the same five or six faces every week and you end up genuinely close. Never expected a boxing gym to feel like that.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">P</div>
+              <div>
+                <div class="testimonial-name">Pragi</div>
+                <div class="testimonial-role">Member · 8 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">Down 6kg, resting heart rate dropped, and I can finally do a full round without gassing out. No gimmicks, just showing up twice a week and doing the work.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Saranga</div>
+                <div class="testimonial-role">Member · 6 months</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card" aria-hidden="true">
+            <div class="testimonial-quote">"</div>
+            <p class="testimonial-text">I have zero athletic background and was terrified I'd embarrass myself. I did, several times, but Coach Dhanush never once made me feel bad about it, just kept fixing my form until it clicked. Two months in and I actually look forward to getting hit in the pads now, which is a sentence I never thought I'd say.</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">S</div>
+              <div>
+                <div class="testimonial-name">Shenali</div>
+                <div class="testimonial-role">Member · 2 months</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
